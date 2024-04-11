@@ -1,11 +1,10 @@
-import {BrowserRouter,Routes,Route} from "react-router-dom"
-import Home from "./Components/Home"
-import Loyalty from "./Components/Loyalty"
 import Navbar from "./Components/Navbar"
+import AppHeader from "./Components/AppHeader"
 
 function App() {
   return (
     <>
+    <AppHeader/>
     <Navbar/>
     </>
   )
