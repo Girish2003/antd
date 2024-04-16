@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { Button,Modal } from 'antd';
 import CardGrid from '../Components/CardGrid'; 
+import RewardForm from '../Components/RewardForm';
 
 const Rewards = () => {
+  const [visible,setVisible]=useState(false)
+  
   const initialRewards = [
     {
       name: "Discount on Next Purchase",
@@ -42,30 +45,30 @@ const Rewards = () => {
     setRewards(updatedRewards);
   };
 
-  const handleAdd = () => {
-    const newReward = {
-      name: "New Reward",
-      earn: {
-        purchaseAmount: 0,
-        points: 0,
-        referralPoints: 0
-      },
-      redeem: {
-        redeemPoints: 0,
-        cashValue: 0,
-        minPoints: 0,
-        displayMode: "Percentage"
-      }
-    };
-    setRewards([...rewards, newReward]);
+  const handleClose = (newReward) => {
+    setVisible(false); 
+    console.log(newReward);
+    if(newReward.name!==null && newReward.name!==undefined ){
+    setRewards([...rewards, newReward])
+    }
   };
+
 
   return (
     <div>
       <div style={{ display: 'flex',justifyContent:'flex-end',  margin: '20px' }}>
-          <Button type="primary" onClick={handleAdd}>Add New</Button>
+          <Button type="primary" onClick={()=>setVisible(!visible)}>Add New</Button>
+          
       </div>      
       <CardGrid data={rewards} onEdit={handleEdit} />
+      <Modal
+        title="Add Item"
+        visible={visible}
+        onCancel={handleClose}
+        footer={null}
+      >
+        <RewardForm data={{}} onClose={handleClose} />
+      </Modal>
     </div>
   );
 };

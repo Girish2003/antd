@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 function Loyalty() {
   return (
     <div style={{ display: 'flex', height: '100%' }}>
-      <Tabs defaultActiveKey="1" onChange={(key) => console.log(key)} tabPosition="left" style={{ flexGrow: 1 }}>
+      <Tabs defaultActiveKey="1"  tabPosition="left" style={{ flexGrow: 1 }}>
         <TabPane tab="Promotions" key="1">
           <Promotions />
         </TabPane>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { Button,Modal } from 'antd';
 import CardGrid from '../Components/CardGrid'; 
+import TrialsForm from '../Components/TrialsForm';
 
 const Trials = () => {
+  const [visible,setVisible]=useState(false)
   const initialTrials = [
     {
       name: "Free Trial",
@@ -31,7 +33,12 @@ const Trials = () => {
     updatedTrials[index] = updatedTrial;
     setTrials(updatedTrials);
   };
-
+  const handleClose = (newTrial) => {
+    setVisible(false); // Close the modal
+    if(newTrial.name!==null && newTrial.name!==undefined){
+    setTrials([...trials, newTrial])
+    }
+  };
   const handleAdd = () => {
     const newTrial = {
       name: "New Trial",
@@ -46,9 +53,17 @@ const Trials = () => {
     <div>
       <div style={{ display: 'flex',justifyContent:'flex-end',  margin: '20px' }}>
 
-          <Button type="primary" onClick={handleAdd}>Add New</Button>
+          <Button type="primary" onClick={()=>setVisible(!visible)}>Add New</Button>
       </div>
       <CardGrid data={trials} onEdit={handleEdit} />
+      <Modal
+        title="Add Item"
+        visible={visible}
+        onCancel={handleClose}
+        footer={null}
+      >
+        <TrialsForm data={{}} onClose={handleClose} />
+      </Modal>
     </div>
   );
 };

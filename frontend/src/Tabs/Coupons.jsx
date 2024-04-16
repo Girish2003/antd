@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { Button , Modal} from 'antd';
 import CardGrid from '../Components/CardGrid'; 
+import CouponsForm from '../Components/CouponsForm';
 
 const Coupons = () => {
+  const [visible,setVisible]=useState(false)
+ 
   const initialCoupons = [
     {
       name: "Summer Sale",
@@ -31,26 +34,29 @@ const Coupons = () => {
     updatedCoupons[index] = updatedCoupon;
     setCoupons(updatedCoupons);
   };
-
-  const handleAdd = () => {
-    const newCoupon = {
-      name: "New Coupon",
-      description: "Description",
-      effectiveDate: "YYYY-MM-DD",
-      expiryDate: "YYYY-MM-DD",
-      couponCode: "COUPONCODE",
-      type: "Percentage",
-      discount: 0
-    };
-    setCoupons([...coupons, newCoupon]);
+  const handleClose = (newCoupons) => {
+    setVisible(false); // Close the modal
+    console.log("newCoupons",newCoupons);
+    if(newCoupons.name!==null && newCoupons.name!==undefined){
+    setCoupons([...coupons, newCoupons])
+    console.log(coupons)
+    }
   };
 
   return (
     <div>
       <div style={{ display: 'flex',justifyContent:'flex-end',  margin: '20px' }}>
-          <Button type="primary" onClick={handleAdd}>Add New</Button>
+          <Button type="primary" onClick={()=>setVisible(!visible)}>Add New</Button>
       </div>       
       <CardGrid data={coupons} onEdit={handleEdit} />
+      <Modal
+        title="Add Item"
+        visible={visible}
+        onCancel={handleClose}
+        footer={null}
+      >
+        <CouponsForm data={{}} onClose={handleClose} />
+      </Modal>
     </div>
   );
 };

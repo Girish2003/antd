@@ -1,7 +1,21 @@
-import React from 'react';
-import { Card, Col, Row, Button } from 'antd';
+import React ,{useEffect, useState} from 'react';
+import { Card, Col, Row, Button, Modal } from 'antd';
+import RewardForm from './RewardForm';
+import TrialsForm from './TrialsForm';
+import CouponsForm from './CouponsForm';
 
 const CardGrid = ({ data, onEdit }) => {
+  const [visible,setVisible]=useState(false)
+  const [dataItem,setDataItem]=useState({});
+  const handleEdit=(item)=>{
+    setVisible(!visible)
+    setDataItem(item)
+    onEdit(item)
+  }
+  const handleClose = (item) => {
+    setVisible(!visible); // Close the modal
+    
+  };
   const renderValue = (value) => {
     if (typeof value === 'object') {
       return Object.entries(value).map(([subKey, subValue]) => (
@@ -19,16 +33,27 @@ const CardGrid = ({ data, onEdit }) => {
         <Col span={8} key={index}>
           <Card
             title={item.name}
-            extra={<Button onClick={() => onEdit(item)}>Edit</Button>}
+            extra={<Button onClick={()=>handleEdit(item)}>Edit</Button>
+          }
           >
             {Object.entries(item).map(([key, value]) => (
               <div key={key} style={{ marginBottom: '10px', fontWeight: 'bold' }}>
-                {key}: {renderValue(value)}
+                {key.charAt(0).toUpperCase()+key.slice(1)}: {renderValue(value)}
               </div>
             ))}
           </Card>
         </Col>
       ))}
+      <Modal
+        title="Edit Item"
+        visible={visible}
+        onCancel={handleClose}
+        footer={null}
+      >
+        {dataItem.redeem!==null && dataItem.redeem!==undefined ?<RewardForm data={dataItem} onClose={handleClose} />:
+        dataItem.trial!==null && dataItem.trial!==undefined?<TrialsForm data={dataItem} onClose={handleClose}/>:
+        <CouponsForm data={dataItem} onClose={handleClose}/>}
+      </Modal>
     </Row>
   );
 };
