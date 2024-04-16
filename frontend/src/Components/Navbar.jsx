@@ -8,9 +8,8 @@ import UserRoutes from '../Routes/UserRoutes';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
-    const { Header, Sider, Content } = Layout;
+    const {  Sider, Content } = Layout;
     const {Text}=Typography
-    const [visible,setVisible]=useState(false)
   
     return (
       <Layout  style={{ minHeight: '100vh' }}>
