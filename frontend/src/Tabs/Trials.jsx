@@ -42,6 +42,20 @@ const Trials = () => {
     setTrials([...trials, newTrial]);
   };
 
+
+
+
+  
+  // const handleAdd = () => {
+  //   const newTrial = {
+  //     name: "New Trial",
+  //     type: "Type",
+  //     attach: "Attach",
+  //     trial: "30 days"
+  //   };
+  //   setTrials([...trials, newTrial]);
+  // };
+
   return (
     <div>
       <div style={{ display: 'flex',justifyContent:'flex-end',  margin: '20px' }}>
